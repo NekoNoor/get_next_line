@@ -6,64 +6,76 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/14 20:37:59 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/16 18:57:03 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-ssize_t	check_endl(char *buf, ssize_t size)
+ssize_t	get_index(char *s, char c)
 {
 	ssize_t	i;
 
 	i = 0;
-	while (i < size)
+	while (s[i])
 	{
-		if (buf[i] == '\n')
+		if (s[i] == c)
 			break ;
 		i++;
 	}
 	return (i);
 }
 
-void	*ft_memcpy(void *dst, const void *src, size_t n)
+char	*ft_strncpy(char *dst, const char *src, size_t len)
 {
-	unsigned char		*dst_uc;
-	unsigned const char	*src_ucc;
-	size_t				i;
+	size_t	i;
 
-	if (dst == NULL && src == NULL)
-		return (NULL);
-	dst_uc = (unsigned char *)dst;
-	src_ucc = (unsigned const char *)src;
 	i = 0;
-	while (i < n)
+	while (i < len)
 	{
-		dst_uc[i] = src_ucc[i];
+		if (src[i] == '\0')
+			break ;
+		dst[i] = src[i];
 		i++;
 	}
+	dst[i] = '\0';
 	return (dst);
 }
 
-char	*buf_cat(char *cat, char *buf, ssize_t size, ssize_t read)
+char	*ft_strndup(char *s1, size_t n)
+{
+	char	*s2;
+	size_t	len;
+
+	len = get_index(s1, '\0');
+	if (len < n)
+		n = len;
+	s2 = (char *)malloc(sizeof(char) * (n + 1));
+	if (s2 == NULL)
+		return (NULL);
+	return (ft_strncpy(s2, s1, n));
+}
+
+char	*buf_cat(char *cat, char *buf, size_t n)
 {
 	char	*new;
+	size_t	catlen;
+	size_t	buflen;
 
+	buflen = get_index(buf, '\0');
+	if (buflen < n)
+		n = buflen;
 	if (cat == NULL)
-	{
-		new = (char *)malloc(sizeof(char) * (size + 1));
-		if (new == NULL)
-			return (NULL);
-		ft_memcpy(new, buf, size);
-		new[size] = '\0';
-		return (new);
-	}
-	new = (char *)malloc(sizeof(char) * (size + read + 1));
+		return (ft_strndup(buf, n));
+	catlen = get_index(cat, '\0');
+	if (n == 0)
+		return (ft_strndup(cat, catlen));
+	new = (char *)malloc(sizeof(char) * (catlen + n + 1));
 	if (new == NULL)
 		return (NULL);
-	ft_memcpy(new, cat, read);
+	ft_strncpy(new, cat, catlen);
 	free(cat);
-	ft_memcpy(new + read, buf, size);
-	new[size + read] = '\0';
+	ft_strncpy(new + catlen, buf, n);
+	free(buf);
 	return (new);
 }

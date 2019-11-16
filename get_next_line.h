@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/14 20:38:11 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/16 19:00:13 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,22 @@
 # include <sys/uio.h>
 # include <unistd.h>
 # include <stdlib.h>
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 32
+# endif
 
-int		get_next_line(int fd, char **line);
-ssize_t	check_endl(char *str, ssize_t size);
-void	*ft_memcpy(void *dst, const void *src, size_t n);
-char	*buf_cat(char *cat, char *buf, ssize_t size, ssize_t read);
+typedef struct	s_list
+{
+	char			*buf;
+	int				fd;
+	struct s_list	*next;
+}				t_list;
+
+int				get_next_line(int fd, char **line);
+
+ssize_t			get_index(char *s, char c);
+char			*ft_strncpy(char *dst, const char *src, size_t len);
+char			*ft_strndup(char *s1, size_t n);
+char			*buf_cat(char *cat, char *buf, size_t n);
 
 #endif
