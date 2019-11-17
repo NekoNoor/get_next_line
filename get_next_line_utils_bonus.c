@@ -6,11 +6,11 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/17 18:11:48 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 18:11:49 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/17 21:56:26 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 ssize_t	get_index(char *s, char c)
 {

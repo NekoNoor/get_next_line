@@ -6,11 +6,11 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/17 18:11:57 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 18:11:58 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/17 21:56:18 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static t_list	*new_buffer(char *buf, int fd)
 {
