@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   get_next_line.h                                    :+:    :+:            */
+/*   get_next_line_bonus.h                              :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 18:10:43 by nschat        ########   odam.nl         */
+/*   Created: 2019/11/17 18:11:21 by nschat        #+#    #+#                 */
+/*   Updated: 2019/11/17 18:14:17 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_BONUS_H
+# define GET_NEXT_LINE_BONUS_H
 # include <sys/types.h>
 # include <sys/uio.h>
 # include <unistd.h>
