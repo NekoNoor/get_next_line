@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 18:01:35 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/17 22:01:29 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,14 +92,12 @@ int				get_next_line(int fd, char **line)
 	ssize_t			endl;
 
 	file = get_buffer(&buffers, fd);
-	while (1)
+	size = 1;
+	while (size > 0)
 	{
 		size = read_file(fd, file);
 		if (size < 1)
-		{
-			free_buffer(&buffers, fd);
-			return (size);
-		}
+			break ;
 		endl = get_index(file->buf, '\n');
 		if (endl < size)
 		{
@@ -110,4 +108,6 @@ int				get_next_line(int fd, char **line)
 		*line = ft_strnjoin(*line, file->buf, size);
 		file->buf = NULL;
 	}
+	free_buffer(&buffers, fd);
+	return (size);
 }
