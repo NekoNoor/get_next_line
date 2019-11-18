@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 22:01:29 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/18 14:50:47 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ static t_list	*get_buffer(t_list **alst, int fd)
 		elem = elem->next;
 	}
 	add_buffer(alst, new_buffer(NULL, fd));
-	return (*alst);
+	elem = *alst;
+	while (elem->next)
+		elem = elem->next;
+	return (elem);
 }
 
 static void		free_buffer(t_list **alst, int fd)
