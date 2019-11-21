@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/21 16:59:19 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/21 18:38:01 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ char	*ft_strndup(char *s1, size_t n)
 	size_t	len;
 
 	len = get_index(s1, '\0');
-	if (n == 0 || len == 0)
-		return (NULL);
 	if (len < n)
 		n = len;
 	s2 = (char *)malloc(sizeof(char) * (n + 1));
@@ -68,9 +66,11 @@ char	*ft_strnjoin(char *s1, char *s2, size_t n)
 	if (s2len < n)
 		n = s2len;
 	if (s1 == NULL)
-		return (s2);
-	if (n == 0)
-		return (s1);
+	{
+		new = ft_strndup(s2, n);
+		free(s2);
+		return (new);
+	}
 	s1len = get_index(s1, '\0');
 	new = (char *)malloc(sizeof(char) * (s1len + n + 1));
 	if (new == NULL)
