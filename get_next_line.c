@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/18 14:50:47 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/21 16:59:19 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int				get_next_line(int fd, char **line)
 	static t_list	*buffers;
 	t_list			*file;
 	ssize_t			size;
-	ssize_t			endl;
+	ssize_t			newl;
 
 	file = get_buffer(&buffers, fd);
 	size = 1;
@@ -101,11 +101,11 @@ int				get_next_line(int fd, char **line)
 		size = read_file(fd, file);
 		if (size < 1)
 			break ;
-		endl = get_index(file->buf, '\n');
-		if (endl < size)
+		newl = get_index(file->buf, '\n');
+		if (newl < size)
 		{
-			*line = ft_strnjoin(*line, file->buf, endl);
-			file->buf = ft_strndup(file->buf + endl + 1, size - endl - 1);
+			*line = ft_strnjoin(*line, file->buf, newl);
+			file->buf = ft_strndup(file->buf + newl + 1, size - newl - 1);
 			return (1);
 		}
 		*line = ft_strnjoin(*line, file->buf, size);
