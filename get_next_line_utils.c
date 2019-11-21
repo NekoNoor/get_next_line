@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/21 18:38:01 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/21 18:48:39 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,15 @@ int		read_file(int fd, t_list *file)
 
 	if (read(fd, buf, 0) < 0)
 		return (-1);
+	if (file->buf != NULL)
+	{
+		size = get_index(file->buf, '\0');
+		if (size == 0)
+		{
+			free(file->buf);
+			file->buf = NULL;
+		}
+	}
 	if (file->buf == NULL)
 	{
 		size = read(fd, buf, BUFFER_SIZE);
@@ -99,7 +108,5 @@ int		read_file(int fd, t_list *file)
 		if (file->buf == NULL)
 			size = -1;
 	}
-	else
-		size = get_index(file->buf, '\0');
 	return (size);
 }
