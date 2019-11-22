@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/22 15:05:22 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/22 15:52:11 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ int				get_next_line(int fd, char **line)
 	char			*out;
 
 	file = get_buffer(&buffers, fd);
-	size = 1;
 	out = NULL;
-	while (size > 0)
+	while (1)
 	{
 		size = read_file(fd, file);
 		if (size <= 0)
@@ -78,11 +77,10 @@ int				get_next_line(int fd, char **line)
 		{
 			*line = ft_strnjoin(out, file->buf, newl);
 			file->buf = ft_strndup(file->buf + newl + 1, size - newl - 1);
-			if (*line == NULL || file->buf == NULL)
-				return (-1);
-			return (1);
+			return ((*line == NULL || file->buf == NULL) ? -1 : 1);
 		}
 		out = ft_strnjoin(out, file->buf, size);
+		free(file->buf);
 		if (out == NULL)
 			return (-1);
 		file->buf = NULL;
