@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/17 22:10:47 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/22 16:02:41 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,5 @@ ssize_t			get_index(char *s, char c);
 char			*ft_strncpy(char *dst, const char *src, size_t len);
 char			*ft_strndup(char *s1, size_t n);
 char			*ft_strnjoin(char *s1, char *s2, size_t n);
-int				read_file(int fd, t_list *file);
 
 #endif

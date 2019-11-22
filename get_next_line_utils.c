@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/22 15:45:12 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/22 16:02:19 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,31 +81,4 @@ char	*ft_strnjoin(char *s1, char *s2, size_t n)
 	return (new);
 }
 
-int		read_file(int fd, t_list *file)
-{
-	char	buf[BUFFER_SIZE + 1];
-	ssize_t size;
 
-	if (read(fd, buf, 0) < 0 || file == NULL)
-		return (-1);
-	if (file->buf != NULL)
-	{
-		size = get_index(file->buf, '\0');
-		if (size == 0)
-		{
-			free(file->buf);
-			file->buf = NULL;
-		}
-	}
-	if (file->buf == NULL)
-	{
-		size = read(fd, buf, BUFFER_SIZE);
-		if (size <= 0)
-			return (size);
-		buf[size] = '\0';
-		file->buf = ft_strndup(buf, size);
-		if (file->buf == NULL)
-			size = -1;
-	}
-	return (size);
-}
