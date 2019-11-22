@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/21 18:48:39 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/22 13:13:45 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		read_file(int fd, t_list *file)
 	if (file->buf == NULL)
 	{
 		size = read(fd, buf, BUFFER_SIZE);
-		if (size == -1 || size == 0)
+		if (size <= 0)
 			return (size);
 		buf[size] = '\0';
 		file->buf = ft_strndup(buf, size);
