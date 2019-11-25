@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 20:51:38 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 20:51:39 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 21:16:37 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_list	*get_buffer(t_list **alst, int fd)
 
 size_t	get_index(char *s, char c)
 {
-	ssize_t	i;
+	size_t	i;
 
 	i = 0;
 	while (s[i])
