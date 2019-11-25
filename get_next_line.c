@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/22 16:02:24 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/24 19:45:32 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,13 @@ static t_list	*get_buffer(t_list **alst, int fd)
 	new = (t_list *)malloc(sizeof(t_list));
 	if (new == NULL)
 		return (NULL);
-	new->buf = NULL;
+	new->buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE));
+	if (new->buf == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->size = 0;
 	new->fd = fd;
 	new->next = *alst;
 	*alst = new;
@@ -57,63 +63,70 @@ static void		free_buffer(t_list **alst, int fd)
 	}
 }
 
-static int		read_file(int fd, t_list *file)
+static int		concat_buffer(char **output, t_list *file)
 {
-	char	buf[BUFFER_SIZE + 1];
-	ssize_t size;
+	char	*new;
+	size_t	len;
+	size_t	newl;
 
-	if (read(fd, buf, 0) < 0 || file == NULL)
+	if (*output != NULL)
+		len = ft_strlen(*output);
+	else
+		len = 0;
+	new = (char *)malloc(sizeof(char) * (len + file->size + 1));
+	if (new == NULL)
 		return (-1);
-	if (file->buf != NULL)
+	ft_strncpy(new, *output, len);
+	free(*output);
+	newl = get_newl(file->buf, file->size);
+	ft_strncpy(new + len, file->buf, newl);
+	if (new < file->size)
 	{
-		size = get_index(file->buf, '\0');
-		if (size == 0)
-		{
-			free(file->buf);
-			file->buf = NULL;
-		}
+		ft_strncpy(file->buf, file->buf + newl + 1, file->size - newl - 1);
+		file->size = file->size - newl - 1;
+		return (1);
 	}
-	if (file->buf == NULL)
+	return (0);
+}
+
+static ssize_t	read_file(t_list *file)
+{
+	ssize_t	size;
+
+	if (file->size == 0)
 	{
-		size = read(fd, buf, BUFFER_SIZE);
-		if (size <= 0)
-			return (size);
-		buf[size] = '\0';
-		file->buf = ft_strndup(buf, size);
-		if (file->buf == NULL)
-			size = -1;
+		size = read(file->fd, file->buf, BUFFER_SIZE);
+		file->size = size;
 	}
+	else
+		size = file->size;
 	return (size);
 }
 
 int				get_next_line(int fd, char **line)
 {
 	static t_list	*buffers;
+	char			*output;
 	t_list			*file;
-	ssize_t			size;
-	ssize_t			newl;
-	char			*out;
+	sret_t			ret;
+	sret_t			newl;
 
 	file = get_buffer(&buffers, fd);
-	out = NULL;
-	while (1)
+	if (file == NULL)
+		return (-1);
+	output = NULL;
+	while (ret == 1)
 	{
-		size = read_file(fd, file);
-		if (size <= 0)
+		ret = read_file(file);
+		if (ret <= 0)
 			break ;
-		newl = get_index(file->buf, '\n');
-		if (newl < size)
-		{
-			*line = ft_strnjoin(out, file->buf, newl);
-			file->buf = ft_strndup(file->buf + newl + 1, size - newl - 1);
-			return ((*line == NULL || file->buf == NULL) ? -1 : 1);
-		}
-		out = ft_strnjoin(out, file->buf, size);
-		free(file->buf);
-		if (out == NULL)
-			return (-1);
-		file->buf = NULL;
+		ret = concat_buffer(&output, file);
+		if (ret == -1 || ret == 1)
+			break ;
 	}
-	free_buffer(&buffers, fd);
-	return (size);
+	if (ret <= 0)
+		free_buffer(&buffers, fd);
+	else
+		*line = output;
+	return (ret);
 }
