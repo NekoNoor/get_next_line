@@ -6,70 +6,110 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/24 19:45:32 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 18:57:06 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-ssize_t	get_newl(char *s, ssize_t len)
+t_list	*get_buffer(t_list **alst, int fd)
+{
+	t_list	*node;
+	t_list	*new;
+
+	node = *alst;
+	while (node)
+	{
+		if (node->fd == fd)
+			return (node);
+		node = node->next;
+	}
+	new = (t_list *)malloc(sizeof(t_list));
+	if (new == NULL)
+		return (NULL);
+	new->buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (new->buf == NULL)
+	{
+		free(new);
+		return (NULL);
+	}
+	new->size = 0;
+	new->fd = fd;
+	new->next = *alst;
+	*alst = new;
+	return (new);
+}
+
+void	free_buffer(t_list **alst, int fd)
+{
+	if ((*alst)->fd == fd)
+	{
+		free((*alst)->buf);
+		free(*alst);
+		*alst = NULL;
+		return ;
+	}
+	if ((*alst)->next == NULL)
+		return ;
+	if ((*alst)->next->fd == fd)
+	{
+		(*alst)->next = (*alst)->next->next;
+		free((*alst)->next->buf);
+		free((*alst)->next);
+	}
+	else
+		free_buffer(&(*alst)->next, fd);
+}
+
+size_t	get_index(char *s, char c)
 {
 	ssize_t	i;
 
 	i = 0;
-	while (i < len)
+	while (s[i])
 	{
-		if (s[i] == '\n')
+		if (s[i] == c)
 			break ;
 		i++;
 	}
 	return (i);
 }
 
-size_t	ft_strlen(char *s)
+char	*ft_strncpy(char *dst, const char *src, size_t n)
 {
-	size_t	len;
-
-	len = 0;
-	while (s[len])
-		len++;
-	return (len);
-}
-
-void	*ft_memmove(void *dst, const void *src, size_t n)
-{
-	unsigned const char	*src_ucc;
-	unsigned char 		*dst_uc;
 	size_t	i;
 
-	if (dst < src)
+	i = 0;
+	while (i < n)
 	{
-		i = 0;
-		while (i < n)
-		{
-			dst_uc[i] = src_ucc[i];
-			i++;
-		}
+		dst[i] = src[i];
+		i++;
+	}
+	dst[i] = '\0';
+	return (dst);
+}
+
+char	*copy_buffer(char *out, t_list *file, size_t newl)
+{
+	char	*new;
+	size_t	len;
+
+	if (out == NULL)
+	{
+		new = (char *)malloc(sizeof(char) * (newl + 1));
+		if (new == NULL)
+			return (NULL);
+		ft_strncpy(new, file->buf, newl);
 	}
 	else
 	{
-		while (n)
-		{
-			n--;
-			dst_uc[n] = src_ucc[n];
-		}
+		len = get_index(out, '\0');
+		new = (char *)malloc(sizeof(char) * (len + newl + 1));
+		if (new == NULL)
+			return (NULL);
+		ft_strncpy(new, out, len);
+		free(out);
+		ft_strncpy(new + len, file->buf, newl);
 	}
-	return (dst);
-}
-
-char	*ft_strncpy(char *dst, char *src, size_t n)
-{
-	size_t	len;
-
-	len = ft_strlen(src);
-	if (len < n)
-		n = len;
-	ft_memmove(dst, src, n);
-	dst[n] = '\0';
-	return (dst);
+	return (new);
 }
