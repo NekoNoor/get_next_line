@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 20:41:05 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 20:43:53 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 
 enum			e_retval
 {
-	error = -1
+	error = -1,
 	eof_read = 0,
 	line_read = 1,
-	loop = 2,
+	loop = 2
 };
 
 typedef struct	s_list
