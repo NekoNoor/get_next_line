@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 20:07:17 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 20:30:55 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,12 @@ char	*ft_strncpy(char *dst, const char *src, size_t n)
 	return (dst);
 }
 
-char	*copy_buffer(char *out, t_list *file, size_t newl)
+char	*copy_buffer(char *old, t_list *file, size_t newl)
 {
 	char	*new;
 	size_t	len;
 
-	if (out == NULL)
+	if (old == NULL)
 	{
 		new = (char *)malloc(sizeof(char) * (newl + 1));
 		if (new == NULL)
@@ -82,12 +82,12 @@ char	*copy_buffer(char *out, t_list *file, size_t newl)
 	}
 	else
 	{
-		len = get_index(out, '\0');
+		len = get_index(old, '\0');
 		new = (char *)malloc(sizeof(char) * (len + newl + 1));
 		if (new == NULL)
 			return (NULL);
-		ft_strncpy(new, out, len);
-		free(out);
+		ft_strncpy(new, old, len);
+		free(old);
 		ft_strncpy(new + len, file->buf, newl);
 	}
 	return (new);
