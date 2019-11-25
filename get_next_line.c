@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 20:40:10 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 22:39:03 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,17 @@ static void		free_recursive(t_list *lst, int fd)
 
 static void		free_buffer(t_list **alst, int fd)
 {
-	if ((*alst)->fd == fd)
+	t_list	*node;
+
+	node = *alst;
+	if (node->fd == fd)
 	{
-		free((*alst)->buf);
-		free(*alst);
-		*alst = NULL;
+		*alst = node->next;
+		free(node->buf);
+		free(node);
 	}
 	else
-		free_recursive(*alst, fd);
+		free_recursive(node, fd);
 }
 
 static ssize_t	read_line(t_list *file, char **out)
