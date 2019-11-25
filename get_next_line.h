@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 18:44:34 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 20:07:17 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,10 @@
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 32
 # endif
+# define CONTINUE 2
+# define LINE_READ 1
+# define EOF_READ 0
+# define ERROR -1
 
 typedef struct	s_list
 {
@@ -31,7 +35,6 @@ typedef struct	s_list
 int				get_next_line(int fd, char **line);
 
 t_list			*get_buffer(t_list **alst, int fd);
-void			free_buffer(t_list **alst, int fd);
 size_t			get_index(char *s, char c);
 char			*ft_strncpy(char *dst, const char *src, size_t n);
 char			*copy_buffer(char *out, t_list *file, size_t newl);

@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 18:57:06 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/25 20:07:17 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,27 +38,6 @@ t_list	*get_buffer(t_list **alst, int fd)
 	new->next = *alst;
 	*alst = new;
 	return (new);
-}
-
-void	free_buffer(t_list **alst, int fd)
-{
-	if ((*alst)->fd == fd)
-	{
-		free((*alst)->buf);
-		free(*alst);
-		*alst = NULL;
-		return ;
-	}
-	if ((*alst)->next == NULL)
-		return ;
-	if ((*alst)->next->fd == fd)
-	{
-		(*alst)->next = (*alst)->next->next;
-		free((*alst)->next->buf);
-		free((*alst)->next);
-	}
-	else
-		free_buffer(&(*alst)->next, fd);
 }
 
 size_t	get_index(char *s, char c)
