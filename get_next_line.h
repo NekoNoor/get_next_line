@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 20:43:53 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/26 12:28:34 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 #  define BUFFER_SIZE 32
 # endif
 
-enum			e_retval
+enum			e_state
 {
 	error = -1,
 	eof_read = 0,
