@@ -6,14 +6,12 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/25 20:51:52 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/26 12:28:45 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/26 12:50:20 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_BONUS_H
 # define GET_NEXT_LINE_BONUS_H
-# include <sys/types.h>
-# include <sys/uio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # ifndef BUFFER_SIZE
