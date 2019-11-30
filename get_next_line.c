@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/25 22:39:03 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/30 16:51:17 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,13 @@ static ssize_t	read_line(t_list *file, char **out)
 		return (loop);
 	}
 	i = get_index(file->buf, '\n');
-	*out = copy_buffer(*out, file, i);
+	*out = copy_buffer(*out, file->buf, i);
 	if (*out == NULL)
 		return (error);
 	if (i < file->size)
 	{
-		ft_strncpy(file->buf, file->buf + i + 1, file->size - i - 1);
 		file->size = file->size - i - 1;
+		ft_strncpy(file->buf, file->buf + i + 1, file->size);
 		return (line_read);
 	}
 	else
@@ -76,7 +76,7 @@ int				get_next_line(int fd, char **line)
 	static t_list	*buffers;
 	t_list			*file;
 	char			*out;
-	ssize_t			state;
+	t_state			state;
 
 	file = get_buffer(&buffers, fd);
 	if (file == NULL)
@@ -87,7 +87,9 @@ int				get_next_line(int fd, char **line)
 		state = read_line(file, &out);
 	if (state == line_read)
 		*line = out;
-	else
+	if (state == eof_read)
+		*line = copy_buffer(NULL, "", 0);
+	if (state != line_read)
 		free_buffer(&buffers, fd);
 	return (state);
 }
