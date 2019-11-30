@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/30 16:51:17 by nschat        ########   odam.nl         */
+/*   Updated: 2019/11/30 17:14:56 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int				get_next_line(int fd, char **line)
 	if (state == line_read)
 		*line = out;
 	if (state == eof_read)
-		*line = copy_buffer(NULL, "", 0);
+		*line = copy_buffer(out, "", 0);
 	if (state != line_read)
 		free_buffer(&buffers, fd);
 	return (state);
