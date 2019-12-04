@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/12/02 20:03:51 by nschat        ########   odam.nl         */
+/*   Updated: 2019/12/04 14:49:13 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void		free_buffer(t_list **alst, int fd)
 		free_recursive(node, fd);
 }
 
-static ssize_t	read_line(t_list *file, char **out)
+static t_state	read_line(t_list *file, char **out)
 {
 	ssize_t	ret;
 	size_t	i;
@@ -54,7 +54,6 @@ static ssize_t	read_line(t_list *file, char **out)
 			return (ret);
 		file->buf[ret] = '\0';
 		file->size = ret;
-		return (loop);
 	}
 	i = get_index(file->buf, '\n');
 	*out = copy_buffer(*out, file->buf, i);
