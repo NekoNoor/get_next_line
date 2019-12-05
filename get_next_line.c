@@ -6,15 +6,15 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:10 by nschat        #+#    #+#                 */
-/*   Updated: 2019/12/04 14:49:13 by nschat        ########   odam.nl         */
+/*   Updated: 2019/12/05 16:01:46 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void		free_recursive(t_list *lst, int fd)
+static void		free_recursive(t_buf_list *lst, int fd)
 {
-	t_list	*node;
+	t_buf_list	*node;
 
 	if (lst->next->fd == fd)
 	{
@@ -27,9 +27,9 @@ static void		free_recursive(t_list *lst, int fd)
 		free_recursive(lst->next, fd);
 }
 
-static void		free_buffer(t_list **alst, int fd)
+static void		free_buffer(t_buf_list **alst, int fd)
 {
-	t_list	*node;
+	t_buf_list	*node;
 
 	node = *alst;
 	if (node->fd == fd)
@@ -42,7 +42,7 @@ static void		free_buffer(t_list **alst, int fd)
 		free_recursive(node, fd);
 }
 
-static t_state	read_line(t_list *file, char **out)
+static t_state	read_line(t_buf_list *file, char **out)
 {
 	ssize_t	ret;
 	size_t	i;
@@ -72,10 +72,10 @@ static t_state	read_line(t_list *file, char **out)
 
 int				get_next_line(int fd, char **line)
 {
-	static t_list	*buffers;
-	t_list			*file;
-	char			*out;
-	t_state			state;
+	static t_buf_list	*buffers;
+	t_buf_list			*file;
+	char				*out;
+	t_state				state;
 
 	file = get_buffer(&buffers, fd);
 	if (file == NULL)

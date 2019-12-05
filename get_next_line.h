@@ -6,7 +6,7 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:03:30 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/30 16:45:57 by nschat        ########   odam.nl         */
+/*   Updated: 2019/12/05 16:01:26 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,17 @@ typedef enum	e_state
 	loop = 2
 }				t_state;
 
-typedef struct	s_list
+typedef struct	s_buf_list
 {
-	char			*buf;
-	size_t			size;
-	int				fd;
-	struct s_list	*next;
-}				t_list;
+	char				*buf;
+	size_t				size;
+	int					fd;
+	struct s_buf_list	*next;
+}				t_buf_list;
 
 int				get_next_line(int fd, char **line);
 
-t_list			*get_buffer(t_list **alst, int fd);
+t_buf_list		*get_buffer(t_buf_list **alst, int fd);
 size_t			get_index(char *s, char c);
 char			*ft_strncpy(char *dst, const char *src, size_t n);
 char			*copy_buffer(char *old, char *buf, size_t n);
