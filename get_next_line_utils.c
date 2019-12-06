@@ -6,16 +6,16 @@
 /*   By: nschat <nschat@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2019/11/14 18:04:14 by nschat        #+#    #+#                 */
-/*   Updated: 2019/11/30 16:45:59 by nschat        ########   odam.nl         */
+/*   Updated: 2019/12/06 22:23:22 by nschat        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-t_list	*get_buffer(t_list **alst, int fd)
+t_buf_list	*get_buffer(t_buf_list **alst, int fd)
 {
-	t_list	*node;
-	t_list	*new;
+	t_buf_list	*node;
+	t_buf_list	*new;
 
 	node = *alst;
 	while (node)
@@ -24,11 +24,11 @@ t_list	*get_buffer(t_list **alst, int fd)
 			return (node);
 		node = node->next;
 	}
-	new = (t_list *)malloc(sizeof(t_list));
+	new = (t_buf_list *)malloc(sizeof(t_buf_list));
 	if (new == NULL)
 		return (NULL);
-	new->buf = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (new->buf == NULL)
+	new->content = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
+	if (new->content == NULL)
 	{
 		free(new);
 		return (NULL);
@@ -40,7 +40,7 @@ t_list	*get_buffer(t_list **alst, int fd)
 	return (new);
 }
 
-size_t	get_index(char *s, char c)
+size_t		get_index(char *s, char c)
 {
 	size_t	i;
 
@@ -54,7 +54,7 @@ size_t	get_index(char *s, char c)
 	return (i);
 }
 
-char	*ft_strncpy(char *dst, const char *src, size_t n)
+char		*ft_strncpy(char *dst, const char *src, size_t n)
 {
 	size_t	i;
 
@@ -68,7 +68,7 @@ char	*ft_strncpy(char *dst, const char *src, size_t n)
 	return (dst);
 }
 
-char	*copy_buffer(char *old, char *buf, size_t n)
+char		*copy_buffer(char *old, char *buf_content, size_t n)
 {
 	char	*new;
 	size_t	len;
@@ -78,7 +78,7 @@ char	*copy_buffer(char *old, char *buf, size_t n)
 		new = (char *)malloc(sizeof(char) * (n + 1));
 		if (new == NULL)
 			return (NULL);
-		ft_strncpy(new, buf, n);
+		ft_strncpy(new, buf_content, n);
 	}
 	else
 	{
@@ -88,7 +88,7 @@ char	*copy_buffer(char *old, char *buf, size_t n)
 			return (NULL);
 		ft_strncpy(new, old, len);
 		free(old);
-		ft_strncpy(new + len, buf, n);
+		ft_strncpy(new + len, buf_content, n);
 	}
 	return (new);
 }
