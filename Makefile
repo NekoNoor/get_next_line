@@ -6,13 +6,14 @@
 #    By: nschat <nschat@student.codam.nl>             +#+                      #
 #                                                    +#+                       #
 #    Created: 2020/05/31 21:17:26 by nschat        #+#    #+#                  #
-#    Updated: 2020/05/31 22:14:56 by nschat        ########   odam.nl          #
+#    Updated: 2020/10/19 15:19:12 by nschat        ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
-CC = clang
+CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 
+HDR = get_next_line.h
 SRC = get_next_line.c \
 	  get_next_line_utils.c
 
@@ -32,7 +33,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 	$(AR) rcs $@ $^
 
-$(ODIR)/%.o: %.c
+$(ODIR)/%.o: %.c $(HDR)
 	@mkdir -p $(ODIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
